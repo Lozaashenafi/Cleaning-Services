@@ -1,9 +1,11 @@
 'use server'
 
 import { db } from '@/db'
-import { services, testimonials, packages, contactSubmissions } from '@/db/schema'
+import { services, testimonials, packages, contactSubmissions, companyConfigs } from '@/db/schema'
+import { createClient } from '@/utils/supabase/server'
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
+import { gallery } from '@/db/schema';
 
 // --- SERVICES CRUD ---
 export async function deleteService(id: string) {
@@ -20,14 +22,80 @@ export async function upsertService(data: any) {
   revalidatePath('/admin/services')
 }
 
-// --- SUBMISSIONS CRUD (Update Status) ---
+
+export async function deleteGalleryItem(id: string, imagePath: string) {
+  const supabase = await createClient();
+  
+  // 1. Delete from Storage
+  const path = imagePath.split('/').pop(); // Extract file name from URL
+  if (path) {
+    await supabase.storage.from('gallery').remove([path]);
+  }
+
+  // 2. Delete from DB
+  await db.delete(gallery).where(eq(gallery.id, id));
+  revalidatePath('/admin/gallery');
+}
+export async function uploadToGallery(formData: FormData) {
+  const supabase = await createClient();
+  const file = formData.get('image') as File;
+  const title = formData.get('title') as string;
+  const category = formData.get('category') as string; // Change from description to category
+
+  if (!file) throw new Error('No image provided');
+
+  const fileName = `${Date.now()}-${file.name}`;
+  const { data: uploadData, error: uploadError } = await supabase.storage
+    .from('gallery')
+    .upload(fileName, file);
+
+  if (uploadError) throw uploadError;
+
+  const { data: { publicUrl } } = supabase.storage
+    .from('gallery')
+    .getPublicUrl(uploadData.path);
+
+  await db.insert(gallery).values({
+    title,
+    category,
+    imageUrl: publicUrl,
+  });
+
+  revalidatePath('/admin/gallery');
+}
+
+// --- TESTIMONIALS ---
+export async function upsertTestimonial(data: any) {
+  if (data.id) {
+    await db.update(testimonials).set(data).where(eq(testimonials.id, data.id));
+  } else {
+    await db.insert(testimonials).values(data);
+  }
+  revalidatePath('/admin/testimonials');
+}
+
+export async function deleteTestimonial(id: string) {
+  await db.delete(testimonials).where(eq(testimonials.id, id));
+  revalidatePath('/admin/testimonials');
+}
+
+// --- SUBMISSIONS ---
 export async function updateSubmissionStatus(id: string, status: any) {
   await db.update(contactSubmissions).set({ status }).where(eq(contactSubmissions.id, id))
   revalidatePath('/admin/submissions')
 }
 
-// --- TESTIMONIALS CRUD ---
-export async function deleteTestimonial(id: string) {
-  await db.delete(testimonials).where(eq(testimonials.id, id))
-  revalidatePath('/admin/testimonials')
+export async function deleteSubmission(id: string) {
+  await db.delete(contactSubmissions).where(eq(contactSubmissions.id, id))
+  revalidatePath('/admin/submissions')
+}
+
+export async function updateCompanyConfigs(data: any) {
+  // We always update row ID 1
+  await db.update(companyConfigs)
+    .set({ ...data, updatedAt: new Date() })
+    .where(eq(companyConfigs.id, 1));
+    
+  revalidatePath('/', 'layout'); // Refresh the whole site
+  revalidatePath('/admin/settings');
 }

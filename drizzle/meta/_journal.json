@@ -8,6 +8,27 @@
       "when": 1776279455266,
       "tag": "0000_bumpy_radioactive_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776512158706,
+      "tag": "0001_clever_wendigo",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776528281949,
+      "tag": "0002_crazy_sheva_callister",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1776531039501,
+      "tag": "0003_typical_nemesis",
+      "breakpoints": true
     }
   ]
 }

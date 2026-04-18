@@ -84,3 +84,33 @@ export const packages = pgTable('packages', {
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 });
+
+export const gallery = pgTable('gallery', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  title: text('title').notNull(),
+  category: text('category').notNull(), // Added this
+  imageUrl: text('image_url').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const companyConfigs = pgTable('company_configs', {
+  id: integer('id').primaryKey().default(1), // Always ID 1
+  name: text('name').notNull().default('SparkClean'),
+  mission: text('mission'),
+  story: text('story'),
+  values: text('values').array().notNull().default(sql`'{}'::text[]`),
+  
+  // Contact Info
+  phone: text('phone').default('(123) 456-7890'),
+  email: text('email').default('hello@sparkclean.com'),
+  address: text('address').default('123 Clean Street, Suite 100, New York, NY 10001'),
+  workingHours: text('working_hours').default('Mon–Sat: 7am – 8pm'),
+  
+  // Social Media
+  facebookUrl: text('facebook_url'),
+  instagramUrl: text('instagram_url'),
+  tiktokUrl: text('tiktok_url'),
+  twitterUrl: text('twitter_url'),
+  
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});

@@ -11,12 +11,15 @@ import {
   Inbox, 
   Menu, 
   X,
-  LogOut 
+  LogOut, 
+  ImageIcon
 } from 'lucide-react'
 
 const navItems = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { name: 'Services', href: '/admin/services', icon: Briefcase },
+  {name: 'Gallery', href: '/admin/gallery', icon: ImageIcon },
+  {name: 'company Info', href: '/admin/settings', icon: Briefcase },
   { name: 'Submissions', href: '/admin/submissions', icon: Inbox },
   { name: 'Testimonials', href: '/admin/testimonials', icon: MessageSquare },
   { name: 'Packages', href: '/admin/packages', icon: Package },
