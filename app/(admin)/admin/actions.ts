@@ -122,3 +122,21 @@ export async function deletePackage(id: string) {
   revalidatePath('/admin/packages');
   revalidatePath('/', 'layout');
 }
+
+export async function submitContactForm(formData: FormData) {
+  const data = {
+    fullName: formData.get("name") as string,
+    phone: formData.get("phone") as string,
+    email: formData.get("email") as string,
+    location: formData.get("location") as string,
+    cleaningType: formData.get("type") as string,
+    size: formData.get("size") as string || null,
+    preferredDate: formData.get("date") ? new Date(formData.get("date") as string) : null,
+    frequency: formData.get("frequency") as string || null,
+    budget: formData.get("budget") as string || null,
+    notes: formData.get("notes") as string || null,
+  };
+
+  await db.insert(contactSubmissions).values(data);
+  revalidatePath('/admin/submissions');
+}

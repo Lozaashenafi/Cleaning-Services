@@ -7,6 +7,7 @@ import {
   CheckCircle2, Star, ArrowRight, Phone, Droplets,
   SprayCan, Wind, Hammer, Waves, Home, Briefcase,
 } from "lucide-react";
+import banner from "../../../public/banner.png";
 
 // Reusable Icon Mapper
 const iconMap: Record<string, any> = {
@@ -34,7 +35,7 @@ export default async function HomePage() {
       <section className="relative h-[600px] md:h-[700px] overflow-hidden flex items-center">
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1581578731548-c64695cc6958?q=80&w=1920" 
+            src={banner.src}
             alt="Professional cleaning" 
             className="h-full w-full object-cover" 
           />
