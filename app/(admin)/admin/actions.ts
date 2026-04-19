@@ -99,3 +99,26 @@ export async function updateCompanyConfigs(data: any) {
   revalidatePath('/', 'layout'); // Refresh the whole site
   revalidatePath('/admin/settings');
 }
+
+export async function upsertPackage(data: any) {
+  if (data.id) {
+    // If ID exists, Update
+    await db.update(packages)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(packages.id, data.id));
+  } else {
+    // If no ID, Insert
+    await db.insert(packages).values(data);
+  }
+  
+  // Refresh the data on the website
+  revalidatePath('/admin/packages');
+  revalidatePath('/', 'layout'); 
+}
+
+export async function deletePackage(id: string) {
+  await db.delete(packages).where(eq(packages.id, id));
+  
+  revalidatePath('/admin/packages');
+  revalidatePath('/', 'layout');
+}
