@@ -14,7 +14,7 @@ export default async function AdminSubmissionsPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-bold text-slate-800">Inquiries & Quotes</h1>
-        <p className="text-slate-500 mt-1">Manage incoming requests from the SparkClean website.</p>
+        <p className="text-slate-500 mt-1">Manage incoming requests from the Covenant clean co website.</p>
       </div>
 
       {submissions.length === 0 ? (

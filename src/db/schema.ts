@@ -95,14 +95,14 @@ export const gallery = pgTable('gallery', {
 
 export const companyConfigs = pgTable('company_configs', {
   id: integer('id').primaryKey().default(1), // Always ID 1
-  name: text('name').notNull().default('SparkClean'),
+  name: text('name').notNull().default('Covenant clean co'),
   mission: text('mission'),
   story: text('story'),
   values: text('values').array().notNull().default(sql`'{}'::text[]`),
   
   // Contact Info
   phone: text('phone').default('(123) 456-7890'),
-  email: text('email').default('hello@sparkclean.com'),
+  email: text('email').default('hello@Covenant clean co.com'),
   address: text('address').default('123 Clean Street, Suite 100, New York, NY 10001'),
   workingHours: text('working_hours').default('Mon–Sat: 7am – 8pm'),
   

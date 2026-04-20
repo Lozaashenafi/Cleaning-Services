@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { db } from "@/db";
+import Image from "next/image"; // Use Next.js Image for better optimization
 import { companyConfigs } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
@@ -20,11 +21,21 @@ export default async function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1d82e6]">
-                <span className="text-xl font-bold text-white">SC</span>
-              </div>
-              <span className="text-2xl font-bold">{config?.name || "SparkClean"}</span>
+            <div className="flex items-center gap-2 mb-6 ">
+             <Link href="/" className="flex items-center gap-3">
+          <div className="relative h-26 w-26 flex items-center justify-center">
+            <Image 
+              src="/logo.png" 
+              alt="Covenant clean co Logo" 
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          <span className="text-2xl font-bold text-white tracking-tight">
+            {config?.name || "Covenant clean co"}
+          </span>
+        </Link>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed">
               {config?.mission || "Professional cleaning services you can trust. We deliver spotless results for homes and businesses."}

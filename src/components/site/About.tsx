@@ -12,8 +12,11 @@ const values = [
 ];
 
 const serviceAreas = [
-  "Manhattan", "Brooklyn", "Queens", "Bronx", "Staten Island",
-  "Long Island", "Westchester", "New Jersey (select areas)",
+  "Kitchner",
+  "Guelph",
+  "Cambridge",
+  "Waterloo",
+  "Brantford",
 ];
 
 export default async function About() {
@@ -28,7 +31,7 @@ export default async function About() {
       <section className="bg-[#1d82e6] py-24 text-white">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl font-extrabold md:text-6xl tracking-tight">
-            About {config?.name || "SparkClean"}
+            About {config?.name || "Covenant clean co"}
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-blue-50 opacity-90">
             A decade of dedication to clean, healthy spaces for businesses and families.
@@ -48,7 +51,7 @@ export default async function About() {
               ) : (
                 <>
                   <p>
-                    Founded in 2014, {config?.name || "SparkClean"} started as a small, family-run cleaning company with a simple mission: to provide reliable, high-quality cleaning services that people can trust.
+                    Founded in 2014, {config?.name || "Covenant clean co"} started as a small, family-run cleaning company with a simple mission: to provide reliable, high-quality cleaning services that people can trust.
                   </p>
                   <p>
                     Over the past decade, we've grown into a team of trained cleaning professionals serving commercial and residential clients. Our growth is a direct result of our commitment to quality, transparency, and customer satisfaction.
@@ -97,12 +100,10 @@ export default async function About() {
             <h2 className="text-center text-3xl font-bold text-slate-900 mb-12">Why Trust Us?</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                "Fully licensed and insured",
                 "Background-checked staff",
-                "ISSA certified cleaning company",
+                "certified cleaning company",
                 "Eco-friendly products",
                 "Satisfaction guarantee",
-                "10+ years in business",
                 "24/7 customer support",
                 "Trained & uniformed team",
               ].map((item) => (
@@ -137,7 +138,7 @@ export default async function About() {
       <section className="bg-[#1d82e6] py-20">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold text-white md:text-5xl">Let's Work Together</h2>
-          <p className="mx-auto mt-6 max-w-md text-blue-50 opacity-90">Ready to experience the SparkClean difference?</p>
+          <p className="mx-auto mt-6 max-w-md text-blue-50 opacity-90">Ready to experience the Covenant clean co difference?</p>
           <Link 
             href="/contact" 
             className="mt-10 inline-block bg-white text-[#1d82e6] px-10 py-4 rounded-full font-bold text-lg hover:bg-blue-50 transition-all shadow-xl"

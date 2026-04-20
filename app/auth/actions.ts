@@ -39,5 +39,5 @@ export async function signup(formData: FormData) {
   revalidatePath('/', 'layout')
   
   // Redirect to home page with a welcome message
-  return redirect('/?message=Welcome to SparkClean! Your account is ready.')
+  return redirect('/?message=Welcome to Covenant clean co! Your account is ready.')
 }

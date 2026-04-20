@@ -14,13 +14,13 @@ export default async function LoginPage(props: {
       <AuthToast error={searchParams.error} message={searchParams.message} />
 
       <div className="w-full max-w-[450px] bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
-        {/* Header matching SparkClean logo style */}
+        {/* Header matching Covenant clean co logo style */}
         <div className="bg-white p-8 pb-4 text-center">
           <div className="inline-flex items-center gap-2 mb-6">
             <div className="bg-[#1d82e6] text-white font-bold w-10 h-10 rounded-lg flex items-center justify-center text-xl">
               SC
             </div>
-            <span className="text-2xl font-bold text-slate-800">SparkClean</span>
+            <span className="text-2xl font-bold text-slate-800">Covenant clean co</span>
           </div>
           <h2 className="text-2xl font-bold text-slate-900">Welcome Back</h2>
           <p className="text-slate-500 mt-2">Enter your credentials to access your account</p>

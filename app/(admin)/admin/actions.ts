@@ -90,15 +90,6 @@ export async function deleteSubmission(id: string) {
   revalidatePath('/admin/submissions')
 }
 
-export async function updateCompanyConfigs(data: any) {
-  // We always update row ID 1
-  await db.update(companyConfigs)
-    .set({ ...data, updatedAt: new Date() })
-    .where(eq(companyConfigs.id, 1));
-    
-  revalidatePath('/', 'layout'); // Refresh the whole site
-  revalidatePath('/admin/settings');
-}
 
 export async function upsertPackage(data: any) {
   if (data.id) {
@@ -139,4 +130,28 @@ export async function submitContactForm(formData: FormData) {
 
   await db.insert(contactSubmissions).values(data);
   revalidatePath('/admin/submissions');
+}
+
+export async function updateCompanyConfigs(data: any) {
+  try {
+    const formattedData = {
+      ...data,
+    };
+
+    await db.update(companyConfigs)
+      .set({
+        ...formattedData,
+        updatedAt: new Date()
+      })
+      .where(eq(companyConfigs.id, 1));
+
+    // 3. This is crucial! It tells Next.js to fetch the fresh data
+    revalidatePath('/', 'layout');
+    revalidatePath('/admin/settings');
+    
+    return { success: true };
+  } catch (error) {
+    console.error("Update Error:", error);
+    throw new Error("Failed to update");
+  }
 }

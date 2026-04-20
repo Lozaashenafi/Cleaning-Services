@@ -57,7 +57,7 @@ export default async function ContactPage() {
               <div className="pt-10 border-t border-slate-100">
                 <h3 className="font-bold text-slate-900 mb-4">Service Areas</h3>
                 <p className="text-slate-500 leading-relaxed">
-                  We proudly serve Manhattan, Brooklyn, Queens, Bronx, Staten Island, and select areas of NJ and Long Island.
+                  We proudly serve Kitchner, Guelph,Cambridge,Waterlo and Brantford. If you're nearby, reach out and we'll let you know if we can help!
                 </p>
               </div>
             </div>

@@ -14,7 +14,7 @@ export default async function GalleryPage() {
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl font-extrabold md:text-6xl tracking-tight">Our Work</h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-blue-50 opacity-90 leading-relaxed">
-            See the SparkClean difference — browse our portfolio of residential and commercial cleaning projects.
+            See the Covenant clean co difference — browse our portfolio of residential and commercial cleaning projects.
           </p>
         </div>
       </section>

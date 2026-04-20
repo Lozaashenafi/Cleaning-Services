@@ -56,7 +56,7 @@ export default function Sidebar() {
         <div className="h-full flex flex-col p-6">
           <div className="flex items-center gap-2 mb-10 px-2">
             <div className="bg-[#1d82e6] text-white font-bold w-8 h-8 rounded flex items-center justify-center">SC</div>
-            <span className="text-xl font-bold text-slate-800">SparkClean</span>
+            <span className="text-xl font-bold text-slate-800">Covenant clean co</span>
           </div>
 
           <nav className="flex-1 space-y-1">

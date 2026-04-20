@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image"; // Use Next.js Image for better optimization
 import { usePathname } from "next/navigation";
 import { Menu, X, Phone } from "lucide-react";
 
@@ -19,14 +20,21 @@ export default function Navbar({ config }: { config: any }) {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-slate-100 bg-white">
       <div className="container mx-auto px-6 flex h-20 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1d82e6]">
-            <span className="text-xl font-bold text-white">SC</span>
+        <Link href="/" className="flex items-center gap-3">
+          {/* Logo Container - Removed blue background so logo is fully visible */}
+          <div className="relative h-26 w-26 flex items-center justify-center">
+            <Image 
+              src="/logo.png" 
+              alt="Covenant clean co Logo" 
+              fill
+              className="object-contain"
+              priority
+            />
           </div>
           <span className="text-2xl font-bold text-slate-900 tracking-tight">
-            {config?.name || "SparkClean"}
+            {config?.name || "Covenant clean co"}
           </span>
         </Link>
 
@@ -68,7 +76,7 @@ export default function Navbar({ config }: { config: any }) {
 
       {/* Mobile menu */}
       {open && (
-        <div className="absolute top-20 inset-x-0 bg-white border-b border-slate-100 md:hidden animate-in slide-in-from-top duration-300">
+        <div className="absolute top-20 inset-x-0 bg-white border-b border-slate-100 md:hidden shadow-xl animate-in slide-in-from-top duration-300">
           <nav className="container mx-auto px-6 flex flex-col gap-2 py-6">
             {navLinks.map((l) => (
               <Link

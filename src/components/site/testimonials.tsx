@@ -19,7 +19,7 @@ export default async function TestimonialsPage() {
             Client Testimonials
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg text-blue-50 opacity-90 leading-relaxed">
-            Don't take our word for it — hear directly from the homeowners and businesses who trust SparkClean every day.
+            Don't take our word for it — hear directly from the homeowners and businesses who trust Covenant clean co every day.
           </p>
         </div>
       </section>
@@ -85,7 +85,7 @@ export default async function TestimonialsPage() {
       <section className="bg-slate-50 py-20">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-slate-800 mb-4">
-            Are you a SparkClean customer?
+            Are you a Covenant clean co customer?
           </h2>
           <p className="text-slate-500 mb-8 max-w-md mx-auto">
             We'd love to hear about your experience with our team.
