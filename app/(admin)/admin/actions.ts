@@ -1,11 +1,12 @@
 'use server'
 
 import { db } from '@/db'
-import { services, testimonials, packages, contactSubmissions, companyConfigs } from '@/db/schema'
+import { services, testimonials, packages, contactSubmissions, companyConfigs, profiles } from '@/db/schema'
 import { createClient } from '@/utils/supabase/server'
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { gallery } from '@/db/schema';
+import { supabaseAdmin } from '@/utils/supabase/admin'
 
 // --- SERVICES CRUD ---
 export async function deleteService(id: string) {
@@ -154,4 +155,93 @@ export async function updateCompanyConfigs(data: any) {
     console.error("Update Error:", error);
     throw new Error("Failed to update");
   }
+}
+
+
+
+export async function updateUserRole(userId: string, newRole: 'admin' | 'user') {
+  await db.update(profiles)
+    .set({ role: newRole })
+    .where(eq(profiles.id, userId));
+  
+  revalidatePath('/admin/users');
+}
+
+export async function createNewAdmin(formData: FormData) {
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+  const role = formData.get('role') as 'admin' | 'user';
+
+  // 1. Create the user in Supabase Auth
+  const { data, error: authError } = await supabaseAdmin.auth.admin.createUser({
+    email: email,
+    password: password,
+    email_confirm: true, 
+    user_metadata: { role: role }
+  });
+
+  if (authError) {
+    console.error("Auth Creation Error:", authError.message);
+    throw new Error(authError.message);
+  }
+
+  // 2. Manually ensure the profile exists in our Drizzle 'profiles' table
+  // This acts as a backup in case the SQL trigger is slow or missing.
+  if (data.user) {
+    try {
+      await db.insert(profiles)
+        .values({
+          id: data.user.id,
+          email: email,
+          role: role,
+        })
+        .onConflictDoUpdate({
+          target: profiles.id,
+          set: { role: role }
+        });
+        
+      console.log("✅ Profile synced for:", email);
+    } catch (dbError) {
+      console.error("Database Sync Error:", dbError);
+      // We don't throw here because the user WAS created in Auth, 
+      // but we want to know why the DB failed.
+    }
+  }
+
+  revalidatePath('/admin/users');
+}
+// --- DELETE USER ACCOUNT ---
+export async function deleteUserAccount(userId: string) {
+  // 1. Delete from Supabase Auth
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
+  
+  if (error) {
+    console.error("Auth Delete Error:", error);
+    throw new Error("Could not delete from Auth system");
+  }
+
+  // 2. Delete from Drizzle Profiles
+  await db.delete(profiles).where(eq(profiles.id, userId));
+
+  revalidatePath('/admin/users');
+}
+
+export async function updateUserPassword(userId: string, formData: FormData) {
+  const newPassword = formData.get('password') as string;
+
+  if (!newPassword || newPassword.length < 6) {
+    throw new Error("Password must be at least 6 characters");
+  }
+
+  // Use the admin client to force update the password
+  const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+    password: newPassword
+  });
+
+  if (error) {
+    console.error("Password Update Error:", error.message);
+    throw new Error(error.message);
+  }
+
+  revalidatePath('/admin/users');
 }
